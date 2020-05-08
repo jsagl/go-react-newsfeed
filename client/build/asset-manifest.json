@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/react-newsfeed/static/css/main.c1388fd1.chunk.css",
+    "main.js": "/react-newsfeed/static/js/main.eb86d7c0.chunk.js",
+    "main.js.map": "/react-newsfeed/static/js/main.eb86d7c0.chunk.js.map",
+    "runtime-main.js": "/react-newsfeed/static/js/runtime-main.32eb2ac0.js",
+    "runtime-main.js.map": "/react-newsfeed/static/js/runtime-main.32eb2ac0.js.map",
+    "static/js/2.ba981552.chunk.js": "/react-newsfeed/static/js/2.ba981552.chunk.js",
+    "static/js/2.ba981552.chunk.js.map": "/react-newsfeed/static/js/2.ba981552.chunk.js.map",
+    "index.html": "/react-newsfeed/index.html",
+    "precache-manifest.8e2d55abd3c3914382bd5c051c0b98ee.js": "/react-newsfeed/precache-manifest.8e2d55abd3c3914382bd5c051c0b98ee.js",
+    "service-worker.js": "/react-newsfeed/service-worker.js",
+    "static/css/main.c1388fd1.chunk.css.map": "/react-newsfeed/static/css/main.c1388fd1.chunk.css.map",
+    "static/js/2.ba981552.chunk.js.LICENSE.txt": "/react-newsfeed/static/js/2.ba981552.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.32eb2ac0.js",
+    "static/js/2.ba981552.chunk.js",
+    "static/css/main.c1388fd1.chunk.css",
+    "static/js/main.eb86d7c0.chunk.js"
+  ]
+}
