@@ -2,3 +2,4 @@
 .env
 server/.idea
 client/node_modules
+dump.rdb

@@ -1,3 +1,7 @@
+setup:
+  addons:
+    - plan: heroku-postgresql
+    - plan: rediscloud
 build:
   docker:
     web: Dockerfile

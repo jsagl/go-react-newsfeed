@@ -78,21 +78,17 @@ const SignUpForm = () => {
                     initialValues={{ Username: '', Email: '', Password: '', Terms: false }}
                     onSubmit={(values, { setSubmitting }) => {
                         setSubmitting(true);
-                        axios.create()({
-                            baseURL: '',
-                            url: `/signup`,
-                            method: 'post',
-                            data: values,
-                        }).then(response => {
-                            setSuccessfulSignUp(true)
-                            dispatch(showToast("Welcome on board! Please sign in to enjoy all the website's features."))
-                            history.push('/signin')
-                        }).catch(response => {
-                            // Todo: better handle error types.
-                            dispatch(showToast('An unexpected error occurred. The server may be down or a user with similar username/password may already exist. Please try again.'));
-                            setSubmitting(false);
-                            usernameInputRef.current.focus();
-                        })
+                        axios.post('/api/v1/signup', values)
+                             .then(response => {
+                                setSuccessfulSignUp(true)
+                                dispatch(showToast("Welcome on board! Please sign in to enjoy all the website's features."))
+                                history.push('/signin')
+                            }).catch(response => {
+                                // Todo: better handle error types.
+                                dispatch(showToast('An unexpected error occurred. The server may be down or a user with similar username/password may already exist. Please try again.'));
+                                setSubmitting(false);
+                                usernameInputRef.current.focus();
+                            })
                     }}
                     validationSchema={
                         Yup.object().shape({
