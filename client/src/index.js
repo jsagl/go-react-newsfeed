@@ -19,7 +19,12 @@ import App from "./App";
 import {LOADING} from "./constants/constants";
 import drawerReducer from "./reducers/drawerReducer";
 
-const middlewares = applyMiddleware(reduxPromise, logger);
+let middleware
+if (process.env.NODE_ENV == 'production') {
+    middleware = applyMiddleware(reduxPromise)
+} else {
+    middleware = applyMiddleware(reduxPromise, logger)
+}
 
 const reducers = combineReducers({
     articles: articlesReducer,
@@ -41,7 +46,7 @@ const initialState = {
 };
 
 ReactDOM.render(
-    <Provider store={createStore(reducers, initialState, middlewares)}>
+    <Provider store={createStore(reducers, initialState, middleware)}>
         <App />
     </Provider>,
     document.getElementById('root')
