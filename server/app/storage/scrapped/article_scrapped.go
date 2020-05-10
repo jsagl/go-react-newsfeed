@@ -59,8 +59,8 @@ func (store *ExternalArticleStore) Index() ([]*models.Article, error) {
 		Title: "Sources will be available shortly. Please refresh the page",
 		TargetUrl: "https://www.rubyflow.com",
 		Date: time.Now(),
-		Category: "ruby",
-		SourceName: "Go Gin Newsfeed",
+		Category: "golang",
+		SourceName: "Go React Newsfeed",
 		SourceUrl: "https://www.rubyflow.com",
 	}
 
@@ -72,7 +72,7 @@ func (store *ExternalArticleStore) scrapExternalSources() {
 
 	var wg sync.WaitGroup
 
-	sources := []string{"ruby_flow", "ruby_weekly", "thoughtbot"}
+	sources := []string{"ruby_flow", "ruby_weekly", "thoughtbot", "golang_weekly"}
 
 	jobs := make(chan string, len(sources))
 	articlesChan := make(chan []*models.Article, len(sources))
@@ -136,6 +136,13 @@ func (store *ExternalArticleStore) scrapSource(source string) ([]scrappers.Artic
 
 	case "ruby_weekly":
 		articles, err := scrappers.ScrapRubyWeeklyArticles()
+		if err != nil {
+			return nil, err
+		}
+		return articles, nil
+
+	case "golang_weekly":
+		articles, err := scrappers.ScrapGolangWeeklyArticles()
 		if err != nil {
 			return nil, err
 		}

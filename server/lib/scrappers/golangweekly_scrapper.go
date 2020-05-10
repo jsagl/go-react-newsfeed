@@ -10,14 +10,14 @@ import (
 	"time"
 )
 
-func ScrapRubyWeeklyArticles() ([]Article, error) {
-	scrappingError := "Error while scrapping RubyWeekly"
+func ScrapGolangWeeklyArticles() ([]Article, error) {
+	scrappingError := "Error while scrapping GolangWeekly"
 
 	// Necessary to skip certificates validation
 	tr:= &http.Transport {TLSClientConfig:&tls.Config {InsecureSkipVerify: true}}
 	client := http.Client {Transport: tr}
 
-	resp1, err := client.Get ("https://www.rubyweekly.com/")
+	resp1, err := client.Get ("https://www.golangweekly.com/")
 	if err != nil {
 		return nil, err
 	}
@@ -30,11 +30,11 @@ func ScrapRubyWeeklyArticles() ([]Article, error) {
 
 	urlComplement, ok := homepage.Find(".main").Find("p").First().Find("a").Attr("href")
 	if !ok {
-		fmt.Println("could not find latest newsletter issue number at RubyWeekly")
+		fmt.Println("could not find latest newsletter issue number at GolangWeekly")
 		return nil, nil
 	}
 
-	url := "https://www.rubyweekly.com" + urlComplement
+	url := "https://www.golangweekly.com" + urlComplement
 	resp2, err := client.Get (url)
 	if err != nil {
 		return nil, err
@@ -46,7 +46,7 @@ func ScrapRubyWeeklyArticles() ([]Article, error) {
 		return nil, err
 	}
 
-	date, err := extractDate(urlComplement)
+	date, err := extractDateGolangWeekly(urlComplement)
 	if err != nil {
 		fmt.Println(scrappingError)
 		return nil, err
@@ -62,9 +62,9 @@ func ScrapRubyWeeklyArticles() ([]Article, error) {
 			var title, targetUrl, category, sourceUrl, sourceName  string
 
 			title = s.Find(".mainlink").First().Find("a").Text()
-			category = "ruby"
-			sourceUrl = "https://www.rubyweekly.com/"
-			sourceName = "RubyWeekly"
+			category = "golang"
+			sourceUrl = "https://www.golangweekly.com/"
+			sourceName = "GolangWeekly"
 			targetUrl, _ = s.Find(".mainlink").First().Find("a").Attr("href")
 
 			article := Article{
@@ -83,7 +83,7 @@ func ScrapRubyWeeklyArticles() ([]Article, error) {
 	return articles, nil
 }
 
-func extractDate(urlComplement string) (time.Time, error) {
+func extractDateGolangWeekly(urlComplement string) (time.Time, error) {
 	r, _ := regexp.Compile(`\d+`)
 	issueNumberAsString := r.FindString(urlComplement)
 
@@ -97,8 +97,8 @@ func extractDate(urlComplement string) (time.Time, error) {
 		}
 	}
 
-	referenceUnixTime := int64(1587625200)
-	referenceIssueNum := int64(498)
+	referenceUnixTime := int64(1588921200)
+	referenceIssueNum := int64(311)
 	oneWeekInSec := int64(604800)
 
 	unixTime := referenceUnixTime + (issueNumber - referenceIssueNum) * oneWeekInSec
