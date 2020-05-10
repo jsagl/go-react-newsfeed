@@ -1,4 +1,4 @@
-import {REFRESH_TOKEN, SET_SESSION, SIGN_OUT} from "../constants/constants";
+import {CHECK_SESSION, REFRESH_TOKEN, SET_SESSION, SIGN_OUT} from "../constants/constants";
 
 const sessionReducer = (state, action) => {
     if (state === undefined) {
@@ -7,6 +7,7 @@ const sessionReducer = (state, action) => {
 
     switch (action.type) {
         case REFRESH_TOKEN:
+        case CHECK_SESSION:
         case SET_SESSION:
         case SIGN_OUT:
             return action.payload;

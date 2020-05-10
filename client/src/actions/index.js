@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {
-    AUTHENTICATED, DENIED, EMPTY_ARTICLES,
+    AUTHENTICATED, CHECK_SESSION, DENIED, EMPTY_ARTICLES,
     FETCH_ARTICLES,
     FETCH_BOOKMARKS,
     HIDE_TOAST,
@@ -29,11 +29,24 @@ const articlesError = {
     }]
 }
 
+const checkSession = () => {
+    return axiosInstance({
+        url: `/check_session`,
+        withCredentials: true,
+        cookie: 'rememberMeToken',
+        method: 'get',
+    }).then(response => {
+        return {type: CHECK_SESSION, payload: AUTHENTICATED }
+    }).catch(response => {
+        return {type: CHECK_SESSION, payload: DENIED }
+    })
+}
+
 const refreshJwtToken = () => {
     return axiosInstance({
         url: `/refresh`,
         withCredentials: true,
-        cookie: 'token',
+        cookie: 'sessionToken',
         method: 'get',
     }).then(response => {
         // setAuthenticationCookie(response.data)
@@ -47,7 +60,7 @@ const signOut = () => {
     return axiosInstance({
         url: `/signout`,
         withCredentials: true,
-        cookie: 'token',
+        cookie: 'sessionToken',
         method: 'get',
     }).then(response => {
         return {type: SIGN_OUT, payload: DENIED }
@@ -55,14 +68,6 @@ const signOut = () => {
         return {type: SIGN_OUT, payload: DENIED }
     })
 }
-
-// // Setting the cookie from here rather than straight from the back-end as it cannot be set for users blocking third party cookies otherwise.
-// // Would not be secure in a production environment as the cookie might be stolen through cross-site scripting flaws
-// const setAuthenticationCookie = (data) => {
-//     const expires = new Date(data['expires'])
-//     // const secure = window.location.hostname === 'localhost' ? '' : 'secure'
-//     document.cookie = `token=${data['token']};expires=${expires};samesite=lax`
-// }
 
 const setSession = (status) => {
     return {type: SET_SESSION, payload: status }
@@ -72,7 +77,7 @@ const fetchArticles = () => {
     return axiosInstance({
         url: `/articles`,
         withCredentials: true,
-        cookie: 'token',
+        cookie: 'sessionToken',
         method: 'get',
     }).then(response => {
        return {type: FETCH_ARTICLES, payload: response.data }
@@ -91,7 +96,7 @@ const fetchBookmarks = () => {
     return axiosInstance({
         url: `/favorites`,
         withCredentials: true,
-        cookie: 'token',
+        cookie: 'sessionToken',
         method: 'get',
     }).then(response => {
         return {type: FETCH_BOOKMARKS, payload: response.data }
@@ -146,4 +151,5 @@ export {
     setDrawerWidth, SET_DRAWER_WIDTH,
     removeResourceFromList, REMOVE_RESOURCE,
     signOut, SIGN_OUT,
+    checkSession, CHECK_SESSION
 }

@@ -26,7 +26,7 @@ func NewPostgresDatabase() (*gorm.DB, error) {
 		return nil, err
 	}
 
-	db.AutoMigrate(&models.Favorite{}, &models.User{})
+	db.AutoMigrate(&models.Favorite{}, &models.User{}, &models.RememberMeToken{})
 
 	return db, nil
 }

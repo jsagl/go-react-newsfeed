@@ -17,3 +17,9 @@ type UserStore interface {
 	Create(*models.User) (*models.User, error)
 	FindByEmail(email string) (*models.User, error)
 }
+
+type SessionStore interface {
+	StoreRememberMeToken(userId uint, token string) error
+	CheckRememberMeToken(token string) error
+	DestroyRememberMeToken(userId uint) error
+}

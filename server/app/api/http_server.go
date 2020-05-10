@@ -41,8 +41,9 @@ func NewHTTPServer(env *env.Env, mw *middleware.Middleware, usecases usecase.Use
 		apiV1.POST("/signup", v1UserHandler.Create)
 
 		apiV1.POST("/signin", v1SessionHandler.Create)
+		apiV1.GET("/check_session", v1SessionHandler.CheckRememberMeToken)
 		apiV1.GET("/refresh", mw.VerifyAuthentication(), v1SessionHandler.Refresh)
-		apiV1.GET("/signout", mw.VerifyAuthentication(), v1SessionHandler.Destroy)
+		apiV1.GET("/signout", mw.VerifyAuthentication(), mw.GetUserIdFromToken(), v1SessionHandler.Destroy)
 	}
 
 	// Start HTTP server

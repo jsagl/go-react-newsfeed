@@ -94,7 +94,7 @@ func (mw *Middleware) VerifyAuthentication() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		jwtKey := []byte(os.Getenv("SECRET_KEY"))
 
-		cookie, err := c.Cookie("token")
+		cookie, err := c.Cookie("sessionToken")
 		if err != nil || cookie == "" {
 			e := models.NewErrUnauthorized(err, []string{"token"}, []string{"missing_auth_token"})
 			c.AbortWithStatusJSON(http.StatusUnauthorized, e.ServeCustomErr())
@@ -105,7 +105,7 @@ func (mw *Middleware) VerifyAuthentication() gin.HandlerFunc {
 			return jwtKey, nil
 		})
 
-		if err != nil || !tkn.Valid {
+		if err != nil || !tkn.Valid || session.StandardClaims.Subject != "session" {
 			e := models.NewErrUnauthorized(err, []string{"token"}, []string{"invalid_token"})
 			c.AbortWithStatusJSON(http.StatusUnauthorized, e.ServeCustomErr())
 		}
@@ -119,7 +119,7 @@ func (mw *Middleware) GetUserIdFromToken() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		jwtKey := []byte(os.Getenv("SECRET_KEY"))
 
-		cookie, err := c.Cookie("token")
+		cookie, err := c.Cookie("sessionToken")
 		if err != nil || cookie == "" {
 			c.Next()
 		}

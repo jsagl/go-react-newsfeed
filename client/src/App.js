@@ -7,20 +7,20 @@ import NavBar from "./components/navbar/navbar";
 import SignUpForm from "./components/signup/signUpForm";
 import SignInForm from "./components/signin/signinForm";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchArticles, fetchBookmarks, refreshJwtToken} from "./actions";
+import {checkSession, fetchArticles, fetchBookmarks} from "./actions";
 import NavDrawer from "./components/drawer/drawer";
 import {ARTICLE, BOOKMARK} from "./constants/constants";
 
 const App = () => {
     const dispatch = useDispatch();
-    const [shouldRefreshJwt, setShouldRefreshJwt] = useState(true);
+    const [shouldCheckSession, setShouldCheckSession] = useState(true);
 
     useEffect(() => {
-        if (shouldRefreshJwt) {
-            dispatch(refreshJwtToken());
-            setShouldRefreshJwt(false);
+        if (shouldCheckSession) {
+            dispatch(checkSession());
+            setShouldCheckSession(false);
         }
-    }, [dispatch, shouldRefreshJwt])
+    }, [dispatch, shouldCheckSession])
 
     const resource = useSelector(state => state.articles)
 

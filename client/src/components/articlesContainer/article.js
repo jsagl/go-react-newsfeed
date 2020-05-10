@@ -49,11 +49,11 @@ const Article = (props) => {
     const [bookmarked, setBookmarked] = useState(props.article.bookmarked);
 
     const createBookmark = (article) => {
-        return axios.post('/api/v1/favorites', article, {withCredentials: true, cookie: 'token'})
+        return axios.post('/api/v1/favorites', article, {withCredentials: true, cookie: 'sessionToken'})
     }
 
     const deleteBookmark = (article) => {
-        return axios.delete(`/api/v1/favorites`, {data: {target_url: article.target_url}, withCredentials: true, cookie: 'token'})
+        return axios.delete(`/api/v1/favorites`, {data: {target_url: article.target_url}, withCredentials: true, cookie: 'sessionToken'})
     }
 
     const handleBookmarkClick = () => {

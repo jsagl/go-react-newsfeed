@@ -41,13 +41,14 @@ func main() {
 	articleStore := scrapped.NewExternalArticleStore(env)
 	favoriteStore := postgresql.NewPostgresFavoriteStore(env, db)
 	userStore := postgresql.NewPostgresUserStore(env, db)
+	sessionStore := postgresql.NewPostgresSessionStore(env, db)
 
 	// Initialize usecases
 	fmt.Println("Initializing usecases...")
 	articleUsecase := usecase.NewArticleUsecase(env, articleStore, favoriteStore)
 	favoriteUsecase := usecase.NewFavoriteUsecase(env, favoriteStore)
 	userUsecase := usecase.NewUserUsecase(env, userStore)
-	sessionUsecase := usecase.NewSessionUsecase(env, userStore)
+	sessionUsecase := usecase.NewSessionUsecase(env, userStore, sessionStore)
 
 	usecases := usecase.Usecases{
 		Articles: articleUsecase, Favorites: favoriteUsecase,
