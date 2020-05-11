@@ -10,14 +10,14 @@ import (
 	"time"
 )
 
-func ScrapPostgresWeeklyArticles() ([]Article, error) {
-	scrappingError := "Error while scrapping PostgresWeekly"
+func ScrapJSWeeklyArticles() ([]Article, error) {
+	scrappingError := "Error while scrapping JSWeekly"
 
 	// Necessary to skip certificates validation
 	tr:= &http.Transport {TLSClientConfig:&tls.Config {InsecureSkipVerify: true}}
 	client := http.Client {Transport: tr}
 
-	resp1, err := client.Get ("https://postgresweekly.com/")
+	resp1, err := client.Get ("https://javascriptweekly.com/")
 	if err != nil {
 		return nil, err
 	}
@@ -30,11 +30,11 @@ func ScrapPostgresWeeklyArticles() ([]Article, error) {
 
 	urlComplement, ok := homepage.Find(".main").Find("p").First().Find("a").Attr("href")
 	if !ok {
-		fmt.Println("could not find latest newsletter issue number at PostgresWeekly")
+		fmt.Println("could not find latest newsletter issue number at JSWeekly")
 		return nil, nil
 	}
 
-	url := "https://postgresweekly.com" + urlComplement
+	url := "https://javascriptweekly.com" + urlComplement
 	resp2, err := client.Get (url)
 	if err != nil {
 		return nil, err
@@ -46,7 +46,7 @@ func ScrapPostgresWeeklyArticles() ([]Article, error) {
 		return nil, err
 	}
 
-	date, err := extractDatePostgresWeekly(urlComplement)
+	date, err := extractDateJSWeekly(urlComplement)
 	if err != nil {
 		fmt.Println(scrappingError)
 		return nil, err
@@ -62,9 +62,9 @@ func ScrapPostgresWeeklyArticles() ([]Article, error) {
 			var title, targetUrl, category, sourceUrl, sourceName  string
 
 			title = s.Find(".mainlink").First().Find("a").Text()
-			category = "postgres"
-			sourceUrl = "https://postgresweekly.com/"
-			sourceName = "PostgresWeekly"
+			category = "javascript"
+			sourceUrl = "https://javascriptweekly.com/"
+			sourceName = "JavascriptWeekly"
 			targetUrl, _ = s.Find(".mainlink").First().Find("a").Attr("href")
 
 			article := Article{
@@ -83,7 +83,7 @@ func ScrapPostgresWeeklyArticles() ([]Article, error) {
 	return articles, nil
 }
 
-func extractDatePostgresWeekly(urlComplement string) (time.Time, error) {
+func extractDateJSWeekly(urlComplement string) (time.Time, error) {
 	r, _ := regexp.Compile(`\d+`)
 	issueNumberAsString := r.FindString(urlComplement)
 
@@ -97,8 +97,8 @@ func extractDatePostgresWeekly(urlComplement string) (time.Time, error) {
 		}
 	}
 
-	referenceUnixTime := int64(1588748400)
-	referenceIssueNum := int64(354)
+	referenceUnixTime := int64(1588921200)
+	referenceIssueNum := int64(487)
 	oneWeekInSec := int64(604800)
 
 	unixTime := referenceUnixTime + (issueNumber - referenceIssueNum) * oneWeekInSec

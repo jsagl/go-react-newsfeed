@@ -20,7 +20,7 @@ func NewPostgresFavoriteStore(env *env.Env, db *gorm.DB) storage.FavoriteStore {
 
 func (store *PostgresFavoriteStore) Index(userId uint) ([]*models.Favorite, error) {
 	var favorites []*models.Favorite
-	err := store.db.Where("user_id = ?", userId).Find(&favorites).Error
+	err := store.db.Order("date desc").Where("user_id = ?", userId).Find(&favorites).Error
 
 	if err != nil {
 		return nil, err

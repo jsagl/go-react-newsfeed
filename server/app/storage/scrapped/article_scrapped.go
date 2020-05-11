@@ -72,13 +72,13 @@ func (store *ExternalArticleStore) scrapExternalSources() {
 
 	var wg sync.WaitGroup
 
-	sources := []string{"ruby_flow", "ruby_weekly", "thoughtbot", "golang_weekly", "postgres_weekly"}
+	sources := []string{"ruby_flow", "ruby_weekly", "thoughtbot", "golang_weekly", "postgres_weekly", "javascript_weekly"}
 
 	jobs := make(chan string, len(sources))
 	articlesChan := make(chan []*models.Article, len(sources))
 
 
-	for worker := 1; worker <= 5; worker++ {
+	for worker := 1; worker <= 10; worker++ {
 		wg.Add(1)
 		go store.sourceScrapperWorker(jobs, articlesChan, &wg, worker)
 	}
@@ -103,6 +103,7 @@ func (store *ExternalArticleStore) scrapExternalSources() {
 	})
 
 	store.storeInCache(articles)
+	store.env.Logger.Infow("finished scrapping")
 }
 
 func (store *ExternalArticleStore) sourceScrapperWorker(jobs <-chan string, articlesChan chan<- []*models.Article, wg *sync.WaitGroup, worker int) {
@@ -150,6 +151,13 @@ func (store *ExternalArticleStore) scrapSource(source string) ([]scrappers.Artic
 
 	case "postgres_weekly":
 		articles, err := scrappers.ScrapPostgresWeeklyArticles()
+		if err != nil {
+			return nil, err
+		}
+		return articles, nil
+
+	case "javascript_weekly":
+		articles, err := scrappers.ScrapJSWeeklyArticles()
 		if err != nil {
 			return nil, err
 		}

@@ -49,7 +49,7 @@ const CategoriesList = (props) => {
         selected: {},
     }))((props) => <Tab disableRipple {...props} />);
 
-    const categories = uniq(props.articles.map(article => article.category))
+    const categories = uniq(props.articles.map(article => article.category)).sort()
     if (categories.length !== 0) {
         categories.unshift('all')
     }
