@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 
 import Article from "./article";
@@ -14,6 +14,7 @@ const ArticlesList = (props) => {
             scrollbarWidth: 'thin',
             maxWidth: '1000px',
             margin: '0 auto',
+            marginTop: '96px',
             transition: 'all 0.2s linear',
             paddingLeft: drawerWidth,
         },
@@ -50,29 +51,30 @@ const ArticlesList = (props) => {
     const [articlesLimit, setArticlesLimit] = useState(initialArticlesLimit);
 
     const location = window.location.pathname
-    const handleScroll = () => {
-        const bottomReached = window.innerHeight + document.documentElement.scrollTop + 5 >= document.documentElement.offsetHeight;
-        if (bottomReached && articlesLimit < numOfArticles) {
-            setLoaderDisplay(true)
-            setTimeout(() => {
-                setLoaderDisplay(false)
-                setArticlesLimit(articlesLimit + 10)
-            }, 300);
-        }
-        if (bottomReached && articlesLimit >= numOfArticles) {
-            setLimitDisplay(true)
-        }
-
-        if (document.documentElement.scrollTop <= 100) {
-            setLimitDisplay(false)
-        }
-    }
 
     useEffect(()=> {
+        const handleScroll = () => {
+            const bottomReached = window.innerHeight + document.documentElement.scrollTop + 5 >= document.documentElement.offsetHeight;
+            if (bottomReached && articlesLimit < numOfArticles) {
+                setLoaderDisplay(true)
+                setTimeout(() => {
+                    setLoaderDisplay(false)
+                    setArticlesLimit(articlesLimit + 10)
+                }, 300);
+            }
+            if (bottomReached && articlesLimit >= numOfArticles) {
+                setLimitDisplay(true)
+            }
+
+            if (document.documentElement.scrollTop <= 100) {
+                setLimitDisplay(false)
+            }
+        }
+
         window.addEventListener('scroll', handleScroll);
 
         return () => window.removeEventListener('scroll', handleScroll);
-    }, [category, location, articles, handleScroll])
+    }, [category, location, articles, articlesLimit, numOfArticles])
 
     const scrollBackTop = () => {
         window.scrollTo({
