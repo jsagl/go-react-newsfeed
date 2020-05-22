@@ -33,7 +33,7 @@ const checkSession = () => {
     return axiosInstance({
         url: `/check_session`,
         withCredentials: true,
-        cookie: 'rememberMeToken',
+        cookies: ['sessionToken', 'rememberMeToken'],
         method: 'get',
     }).then(response => {
         return {type: CHECK_SESSION, payload: AUTHENTICATED }
