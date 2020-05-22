@@ -46,6 +46,8 @@ const SignInForm = () => {
             height: 'calc(100% - 110px)',
             [theme.breakpoints.down('md')]: {
                 marginTop: "70px",
+                paddingLeft: drawerWidth,
+                transition: 'all 0.2s linear',
             },
             [theme.breakpoints.up('md')]: {
                 marginTop: "80px",
@@ -66,6 +68,7 @@ const SignInForm = () => {
             }
         }
     }));
+    const drawerWidth = useSelector(state => state.drawer)
     const classes = useStyles();
 
     const toast = useSelector(state => state.toast)

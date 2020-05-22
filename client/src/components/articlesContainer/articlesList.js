@@ -60,14 +60,15 @@ const ArticlesList = (props) => {
                 setTimeout(() => {
                     setLoaderDisplay(false)
                     setArticlesLimit(articlesLimit + 10)
-                }, 300);
+                }, 250);
             }
             if (bottomReached && articlesLimit >= numOfArticles) {
                 setLimitDisplay(true)
             }
 
             if (document.documentElement.scrollTop <= 100) {
-                setLimitDisplay(false)
+                setLimitDisplay(false);
+                setArticlesLimit(initialArticlesLimit);
             }
         }
 
