@@ -75,6 +75,11 @@ const CategoriesList = (props) => {
         return value
     }
 
+    const handleClick = (category) => {
+        window.scrollTo({ top: 0, });
+        dispatch(selectCategory(category));
+    }
+
     return (
         <AppBar position="fixed" color="default" elevation={1} square className={classes.root}>
             <StyledTabs
@@ -89,7 +94,7 @@ const CategoriesList = (props) => {
                         return <StyledTab
                             key={`${category}${index}`}
                             label={category}
-                            onClick={() => { dispatch(selectCategory(category)) }}
+                            onClick={() => handleClick(category)}
                         />
                     })
                 }

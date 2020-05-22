@@ -142,5 +142,5 @@ export {
     setDrawerWidth, SET_DRAWER_WIDTH,
     removeResourceFromList, REMOVE_RESOURCE,
     signOut, SIGN_OUT,
-    checkSession, CHECK_SESSION
+    checkSession, CHECK_SESSION,
 }

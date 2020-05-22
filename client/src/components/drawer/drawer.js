@@ -21,6 +21,7 @@ export default function NavDrawer() {
         },
         drawerPaper: {
             width: drawerWidth,
+            zIndex: 1099,
             transition: 'all 0.2s linear',
             backgroundColor: 'white',
         },

@@ -38,7 +38,7 @@ const SignUpForm = () => {
             },
         },
         formContainer: {
-            height: 'calc(100vh - 110px)',
+            height: 'calc(100% - 110px)',
             [theme.breakpoints.down('md')]: {
                 marginTop: "70px",
             },

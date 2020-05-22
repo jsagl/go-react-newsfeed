@@ -9,7 +9,6 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
-import Grid from "@material-ui/core/Grid";
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -21,11 +20,8 @@ import {removeResourceFromList, showToast} from "../../actions";
 
 const Article = (props) => {
     const useStyles = makeStyles((theme) => ({
-        item: {
-            marginRight: '12px',
-            marginLeft: '12px',
-            width: '100%',
-            maxWidth: '1000px',
+        root: {
+            margin: '12px',
         },
         avatarImg:{
             objectFit: 'contain',
@@ -107,32 +103,30 @@ const Article = (props) => {
     }
 
     return (
-        <Grid item xs={12} classes={{item: classes.item}}>
-            <Card elevation={1}>
-                <CardHeader
-                    avatar={
-                        <Avatar
-                            classes={{img: classes.avatarImg}}
-                            variant="square"
-                            alt={`${props.article.category}-logo`}
-                            src={`./assets/${props.article.category}_logo.svg`}/>
-                    }
-                    action={action}
-                    title={
-                        <Link
-                            className={classes.link}
-                            href={`${props.article.target_url}`}
-                            target="_blank"
-                            rel="noreferrer"
-                            color="inherit"
-                        >
-                            {props.article.title}
-                        </Link>
-                    }
-                    subheader={`${props.article.source_name} - ${date}`}
-                />
-            </Card>
-        </Grid>
+        <Card elevation={1} classes={{root: classes.root}}>
+            <CardHeader
+                avatar={
+                    <Avatar
+                        classes={{img: classes.avatarImg}}
+                        variant="square"
+                        alt={`${props.article.category}-logo`}
+                        src={`./assets/${props.article.category}_logo.svg`}/>
+                }
+                action={action}
+                title={
+                    <Link
+                        className={classes.link}
+                        href={`${props.article.target_url}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        color="inherit"
+                    >
+                        {props.article.title}
+                    </Link>
+                }
+                subheader={`${props.article.source_name} - ${date}`}
+            />
+        </Card>
     );
 }
 
