@@ -20,7 +20,7 @@ import {LOADING} from "./constants/constants";
 import drawerReducer from "./reducers/drawerReducer";
 
 let middleware
-if (process.env.NODE_ENV == 'production') {
+if (process.env.NODE_ENV === 'production') {
     middleware = applyMiddleware(reduxPromise)
 } else {
     middleware = applyMiddleware(reduxPromise, logger)

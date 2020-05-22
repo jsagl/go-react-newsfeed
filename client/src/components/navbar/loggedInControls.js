@@ -8,6 +8,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import {AccountCircle} from "@material-ui/icons";
 import {useDispatch} from "react-redux";
 import {fetchArticles, refreshJwtToken, signOut} from "../../actions";
+import axios from "axios";
 
 const LoggedInControls = () => {
     const dispatch = useDispatch();
@@ -35,12 +36,30 @@ const LoggedInControls = () => {
     };
 
     const signout = () => {
-        dispatch(signOut());
+        axios.create({
+            baseURL: 'api/v1',
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+            },
+        })({
+            url: `/signout`,
+            withCredentials: true,
+            cookie: 'sessionToken',
+            method: 'get',
+        }).then(response => {
+            applySignOut();
+        }).catch(response => {
+            applySignOut();
+        })
+    }
+
+    const applySignOut = () => {
         setAnchorEl(null);
+        dispatch(signOut());
         history.push('/');
         dispatch(fetchArticles());
     }
-
 
     return (
         <div>

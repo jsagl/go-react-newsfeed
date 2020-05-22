@@ -32,7 +32,7 @@ func NewHTTPServer(env *env.Env, mw *middleware.Middleware, usecases usecase.Use
 	// V1
 	apiV1 := r.Group("/api/v1")
 	{
-		apiV1.GET("/articles", mw.GetUserIdFromToken(), v1ArticleHandler.Index)
+		apiV1.GET("/articles", mw.GetUserIdFromSessionToken(), v1ArticleHandler.Index)
 
 		apiV1.GET("/favorites", mw.VerifyAuthentication(), v1FavoriteHandler.Index)
 		apiV1.POST("/favorites", mw.VerifyAuthentication(), v1FavoriteHandler.Create)
@@ -41,9 +41,9 @@ func NewHTTPServer(env *env.Env, mw *middleware.Middleware, usecases usecase.Use
 		apiV1.POST("/signup", v1UserHandler.Create)
 
 		apiV1.POST("/signin", v1SessionHandler.Create)
-		apiV1.GET("/check_session", v1SessionHandler.CheckRememberMeToken)
+		apiV1.GET("/check_session", mw.GetUserIdFromSessionToken(), v1SessionHandler.CheckRememberMeToken)
 		apiV1.GET("/refresh", mw.VerifyAuthentication(), v1SessionHandler.Refresh)
-		apiV1.GET("/signout", mw.VerifyAuthentication(), mw.GetUserIdFromToken(), v1SessionHandler.Destroy)
+		apiV1.GET("/signout", mw.VerifyAuthentication(), mw.GetUserIdFromSessionToken(), v1SessionHandler.Destroy)
 	}
 
 	// Start HTTP server

@@ -46,7 +46,7 @@ const Article = (props) => {
     const session = useSelector(state => state.session);
     const history = useHistory();
     const dispatch = useDispatch();
-    const [bookmarked, setBookmarked] = useState(props.article.bookmarked);
+    const [bookmarked, setBookmarked] = useState(Boolean(props.article.bookmarked));
 
     const createBookmark = (article) => {
         return axios.post('/api/v1/favorites', article, {withCredentials: true, cookie: 'sessionToken'})

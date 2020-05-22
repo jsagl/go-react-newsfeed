@@ -56,6 +56,14 @@ func (handler *SessionHttpHandler) Refresh(c *gin.Context) {
 
 // Verify the rememberMeToken when the user loads the page. If it exists, is valid and was not invalidated in DB, return a session cookie.
 func (handler *SessionHttpHandler) CheckRememberMeToken (c *gin.Context) {
+	// if a useId is present, it means that the user sent a sessionToken and is already authenticated
+	userId := uint(c.GetInt64("userId"))
+	if  userId != 0 {
+		handler.setSessionCookie(c, userId)
+		c.AbortWithStatus(http.StatusOK)
+		return
+	}
+
 	jwtKey := []byte(os.Getenv("SECRET_KEY"))
 
 	cookie, err := c.Cookie("rememberMeToken")

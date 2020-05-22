@@ -115,7 +115,7 @@ func (mw *Middleware) VerifyAuthentication() gin.HandlerFunc {
 	}
 }
 
-func (mw *Middleware) GetUserIdFromToken() gin.HandlerFunc {
+func (mw *Middleware) GetUserIdFromSessionToken() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		jwtKey := []byte(os.Getenv("SECRET_KEY"))
 

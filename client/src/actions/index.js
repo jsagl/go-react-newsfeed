@@ -57,16 +57,7 @@ const refreshJwtToken = () => {
 }
 
 const signOut = () => {
-    return axiosInstance({
-        url: `/signout`,
-        withCredentials: true,
-        cookie: 'sessionToken',
-        method: 'get',
-    }).then(response => {
-        return {type: SIGN_OUT, payload: DENIED }
-    }).catch(response => {
-        return {type: SIGN_OUT, payload: DENIED }
-    })
+    return {type: SIGN_OUT, payload: DENIED }
 }
 
 const setSession = (status) => {

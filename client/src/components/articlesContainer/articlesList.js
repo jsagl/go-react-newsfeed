@@ -98,7 +98,7 @@ const ArticlesList = (props) => {
             >
                 <Grid item xs={12} style={{width: '100%',}}/>
                 {
-                    articles.slice(0, articlesLimit).map((article, index) => <Article key={`${article.date}&${index}`} article={article} type={props.resourcesType} />)
+                    articles.slice(0, articlesLimit).map((article, index) => <Article key={`${article.date}&${index}&${article.bookmarked}`} article={article} type={props.resourcesType} />)
                 }
                 <Grid item className={`${loaderDisplay ? classes.visible : classes.hidden} ${classes.bottomIcon}` }>
                     <CircularProgress />
