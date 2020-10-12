@@ -150,9 +150,7 @@ const SignUpForm = () => {
                                         control={<Checkbox color="primary" />}
                                         value={values.Terms}
                                         onChange={handleChange}
-                                        label="I understand that this is a non-commercial side project created for training purpose only,
-                                        that the author can close the website at any given time without prior notice and that he cannot
-                                        be held responsible for any data breach"
+                                        label="I understand that this is a non-commercial side project"
                                     />
                                     <div className={"MuiFormHelperText-contained MuiFormHelperText-root"}>{(errors.Terms && touched.Terms) && errors.Terms}</div>
                                 </div>
